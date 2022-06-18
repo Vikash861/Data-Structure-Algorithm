@@ -80,6 +80,7 @@ int deletionByPosition(node *&head, int pos)
     if(pos==1){
         node * temp = head;
         int tmp = temp->data;
+        head = head->next;
         delete temp;
         return tmp;    
     }
@@ -147,8 +148,9 @@ int main()
     cout << "Head :" << head->data <<  " Tail: "  <<tail->data << endl; 
     // cout << "deleted value: " << deletionByPosition(head,3) << endl;
     // cout << "deleted value: " << deletionByPosition(head,2) << endl;
-    // cout << "deleted value: " << deletionByPosition(head,1) << endl;
-    deletionByValue(head,18);
+    cout << "deleted value: " << deletionByPosition(head,4) << endl;
+    cout << "deleted value: " << deletionByPosition(head,3) << endl;
+    // deletionByValue(head,18);
     cout << "Head :" << head->data <<  " Tail: "  <<tail->data << endl; 
     traverse(head);
 }
