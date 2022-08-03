@@ -135,8 +135,36 @@ void deletionByValue(node *&head,int value){
 
 // 56, 87 ,98 ,87, 87
 
+/////////////////////////////////////////////LINKED LIST CREATION////////////////////////////////////////
+
+node *createList(){
+    int num;
+    cout << "Number of element for list :";
+    cin >> num;
+    int data;
+    cout << "Enter Data: ";
+    cin>>data;
+    node *list = create(data);
+    node *head = list;
+    int cnt = 1;
+    while(cnt < num){
+        cout << "Enter Data: ";
+        cin>>data;
+        insertAtTail(list,data);
+        cnt++;
+    }
+    return head;
+}
+
+////////////////// n = number of element ////////////////////////////////////
+
+
+
+
+
 int main()
 {
+    /*
     node *n1 = create(18);
     node *head = n1; //this is original pointer
     node *tail = n1;
@@ -152,5 +180,7 @@ int main()
     cout << "deleted value: " << deletionByPosition(head,3) << endl;
     // deletionByValue(head,18);
     cout << "Head :" << head->data <<  " Tail: "  <<tail->data << endl; 
-    traverse(head);
+    */
+    node *list = createList();
+    traverse(list);
 }
