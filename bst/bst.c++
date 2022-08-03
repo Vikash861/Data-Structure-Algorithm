@@ -124,7 +124,6 @@ int max(Node *root){
     //          9    
 
 
-
 Node *deleteFromBst(Node *root, int value){
     if(root == NULL){
         return root;
@@ -147,20 +146,19 @@ Node *deleteFromBst(Node *root, int value){
             return temp;
         }
         if(root->left != NULL && root->right != NULL){
-            Node *temp = root->left;
-            while(temp->right == NULL){
-                temp = temp->right;
-            }
-            root->data = temp->data;
-            delete temp;
+            int mini = min(root->right);
+            root->data = mini;
+            root->right = deleteFromBst(root->right,mini);
             return root;
         }
     }
     else if(value < root->data){
-        return deleteFromBst(root->left,value);
+        root->left =  deleteFromBst(root->left,value);
+        return root;
     }
     else{
-        return deleteFromBst(root->right,value);
+        root->right = deleteFromBst(root->right,value);
+        return root;
     } 
 
 }
@@ -177,19 +175,20 @@ int main()
             break;
         }
         insertIntoBst(root, n);
-    }
+    } 
     cout << "Your Tree is look like this" << endl;
     printLevelOrder(root);
-    cout << "preorder" << endl;
-    preOrderTraversal(root);
-    cout << "Minimum element in bst" << endl;
-    cout << min(root) << endl;
-    cout << "Maximum element in bst" << endl;
-    cout << max(root) << endl;
+    // cout << "preorder" << endl;
+    // preOrderTraversal(root);
+    // cout << "Minimum element in bst" << endl;
+    // cout << min(root) << endl;
+    // cout << "Maximum element in bst" << endl;
+    // cout << max(root) << endl;
     cout << "Deleting form bast" << endl;
     int delKey;
     cin >> delKey;
     root = deleteFromBst(root,delKey);
+    cout << endl;
     cout << "Level order traversal " << endl;
     printLevelOrder(root);
 
