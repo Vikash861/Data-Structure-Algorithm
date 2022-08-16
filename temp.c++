@@ -2,38 +2,122 @@
 using namespace std;
 
 
-
-int removeElement(vector<int>& nums, int val) {
-    int sz = nums.size();
-    int j = sz-1;
-    if(sz == 0 || sz == 1 && nums[0] == val)
-        return 0;
-    int i  = 0;
-    while(i < j){
-        if(i < sz && nums[i] != val)
-            i++; 
-        if(j > -1 &&nums[j] == val)
-            j--;
-        if(j<i)
-            break;
-        swap(nums[i++], nums[j++]);    
-
+struct Node {
+    int data;
+    struct Node* next;
+    Node(int x) {
+        data = x;
+        next = NULL;
     }
-    return j+1;
-}
- 
-// 0 0 1 2 2 2 3 4
-// 2,2,3,3
-//       2
+};
+
+
+class Solution
+{
+    public:
+    
+    struct Node* reverse(struct Node* head){
+        if(head == NULL || head->next == NULL){
+        return head;
+        }
+        Node *prev = NULL;
+        Node *curr = head;
+        Node *forward = NULL;
+        while(curr != NULL){
+            forward = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forward;
+        }
+        return prev;
+    }
+    
+    void insertAtTail(struct Node* &head, struct Node* &tail, struct Node* &node){
+        if(head == NULL){
+            head = node;
+            tail = head;
+            delete node;
+        }
+        else{
+            tail->next = node;
+            tail = node;
+            delete node;
+        }
+    }
+
+    struct Node* add(struct Node* first, struct Node* second){
+        Node *ans = NULL;
+        Node *ansHead = ans;
+        Node *ansTail = ans;
+        int carry = 0;
+        
+        while(first != NULL || second != NULL || carry != 0){
+          
+        int val1 = 0;
+        int val2 = 0;
+        
+        if(first!= NULL)
+            val1 = first->data;
+        if(second != NULL){
+            val2 = second->data;
+        }
+          
+        int sum = val1+val2+carry;
+        int digit = sum%10;
+        Node *temp = new Node(digit);
+        insertAtTail(ansHead,ansTail,temp);
+        carry = sum/10;
+        
+        if(first != NULL)
+            first = first->next;
+        if(second != NULL)
+            second = second->next;
+        }
+        return ansHead;
+        
+    }
+    
+    
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+        first = reverse(first);
+        second = reverse(second);
+        
+        Node *ans = add(first,second);
+        
+        ans = reverse(ans);
+        
+        return ans;
+    }
+    void traverse(struct Node *head){
+        while(head != NULL){
+            cout << head->data << " ";
+            head = head->next;
+        }
+    }
+};
 
 int main()
 {
-    vector<int>v = {3,2,2,3};
-    int val = 3;
-    int ans = removeElement(v,val);
-    cout << ans << endl;
-    for(int i = 0; i <= v.size(); i++)
-        cout << v[i] << ' ';
+    Node *head1 = new Node(4);
+    Node *second1 = new Node(5);
+    head1->next = second1;
+    second1->next = NULL;
+
+    Node *head2 = new Node(2);
+    Node *second2 = new Node(4);
+    Node *third2 = new Node(5);
+
+    head2->next = second2;
+    second2->next = third2;
+    third2->next = NULL;
+
+    Solution s1;
+    Node *ans = s1.addTwoLists(head1,head2);
+    s1.traverse(ans);
+
+
+
 
 
 }

@@ -63,7 +63,7 @@ void insertAtPosition(node *&head, node *&tail, int data, int pos)
 
 void traverse(node *head)
 {
-    // head -- copy poiter 
+    // head -- copy poiter
     while (head != NULL)
     {
         cout << head->data << endl;
@@ -77,12 +77,13 @@ void traverse(node *head)
 int deletionByPosition(node *&head, int pos)
 {
 
-    if(pos==1){
-        node * temp = head;
+    if (pos == 1)
+    {
+        node *temp = head;
         int tmp = temp->data;
         head = head->next;
         delete temp;
-        return tmp;    
+        return tmp;
     }
 
     int cnt = 1;
@@ -104,12 +105,15 @@ int deletionByPosition(node *&head, int pos)
 }
 
 // deletion by value
-void deletionByValue(node *&head,int value){
+void deletionByValue(node *&head, int value)
+{
     int cnt = 1;
     node *prevPtr = head;
     node *nextPtr = head;
-    while(1){
-        if(nextPtr->data == value  || head->next == NULL){
+    while (1)
+    {
+        if (nextPtr->data == value || head->next == NULL)
+        {
             goto done;
         }
         cout << "I am in" << endl;
@@ -117,11 +121,12 @@ void deletionByValue(node *&head,int value){
         prevPtr = prevPtr->next;
         cnt++;
     }
-    
-    // for deleting first element
-    done:
-    if(cnt == 1){
-        node *temp  = head;
+
+// for deleting first element
+done:
+    if (cnt == 1)
+    {
+        node *temp = head;
         head = head->next;
         delete temp;
         return;
@@ -137,20 +142,22 @@ void deletionByValue(node *&head,int value){
 
 /////////////////////////////////////////////LINKED LIST CREATION////////////////////////////////////////
 
-node *createList(){
+node *createList()
+{
     int num;
     cout << "Number of element for list :";
     cin >> num;
     int data;
     cout << "Enter Data: ";
-    cin>>data;
+    cin >> data;
     node *list = create(data);
     node *head = list;
     int cnt = 1;
-    while(cnt < num){
+    while (cnt < num)
+    {
         cout << "Enter Data: ";
-        cin>>data;
-        insertAtTail(list,data);
+        cin >> data;
+        insertAtTail(list, data);
         cnt++;
     }
     return head;
@@ -158,9 +165,32 @@ node *createList(){
 
 ////////////////// n = number of element ////////////////////////////////////
 
-
-
-
+bool cycleOrNot(node *head)
+{
+    if (head == NULL)
+    {
+        return false;
+    }
+    node *slow = head;
+    node *fast = head;
+    while (1)
+    {
+        fast = fast->next;
+        if (fast == slow)
+        {
+            return true;
+        }
+        if (fast->next != NULL)
+        {
+            fast = fast->next;
+        }
+        else{
+            return false;
+        }
+        slow = slow->next;
+    }
+    return false;
+}
 
 int main()
 {
@@ -168,19 +198,27 @@ int main()
     node *n1 = create(18);
     node *head = n1; //this is original pointer
     node *tail = n1;
-    // insertions 
+    // insertions
     insetAtHead(head,20);
     insertAtPosition(head,tail,22,2);
     insertAtTail(tail,30);
     traverse(head);
-    cout << "Head :" << head->data <<  " Tail: "  <<tail->data << endl; 
+    cout << "Head :" << head->data <<  " Tail: "  <<tail->data << endl;
     // cout << "deleted value: " << deletionByPosition(head,3) << endl;
     // cout << "deleted value: " << deletionByPosition(head,2) << endl;
     cout << "deleted value: " << deletionByPosition(head,4) << endl;
     cout << "deleted value: " << deletionByPosition(head,3) << endl;
     // deletionByValue(head,18);
-    cout << "Head :" << head->data <<  " Tail: "  <<tail->data << endl; 
+    cout << "Head :" << head->data <<  " Tail: "  <<tail->data << endl;
     */
     node *list = createList();
+    if (cycleOrNot(list))
+    {
+        cout << "Cycle is present" << endl;
+    }
+    else
+    {
+        cout << "Cycle is not presend" << endl;
+    }
     traverse(list);
 }
