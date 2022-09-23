@@ -14,7 +14,7 @@ class node{
     }
 };
 
-/*
+
 node *buildTree(node *root){
     int data;
     cout << "Enter data" << endl;
@@ -29,11 +29,24 @@ node *buildTree(node *root){
     root->right = buildTree(root->right);
     return root;
 }
-*/
+
+// finding height of tree
+
+int height(node* node)
+{
+    if (node == NULL)
+        return 0;
+
+    /* compute the height of each subtree */
+    int lheight = height(node->left);
+    int rheight = height(node->right);
+    int maxHeight = max(lheight,rheight) + 1;
+    return maxHeight;
+}
 
 // level order traversal 
 
-
+/*
 void printCurrentLevel(node *root, int level){
     if(root == NULL){
         return;
@@ -46,26 +59,6 @@ void printCurrentLevel(node *root, int level){
         printCurrentLevel(root->right, level-1);
     }
 }
-
-int height(node* node)
-{
-    if (node == NULL)
-        return 0;
-    else {
-        /* compute the height of each subtree */
-        int lheight = height(node->left);
-        int rheight = height(node->right);
- 
-        /* use the larger one */
-        if (lheight > rheight) {
-            return (lheight + 1);
-        }
-        else {
-            return (rheight + 1);
-        }
-    }
-}
-
 void printLevelOrder(node* root)
 {
     int h = height(root);
@@ -73,6 +66,35 @@ void printLevelOrder(node* root)
     for (i = 1; i <= h; i++){
         printCurrentLevel(root, i);
         cout << endl;
+    }
+}
+*/
+
+
+// level order traversal using queue
+
+void levelOrderTraversal(node *root){
+    queue<node*>q;
+    q.push(root);
+    q.push(NULL);
+    while(!q.empty()){
+        node *temp = q.front();
+        q.pop();
+        if(temp == NULL){
+            cout << endl;
+            if(!q.empty()){
+                q.push(NULL);
+            }
+        }
+        else{
+            cout << temp->data << " ";
+            if(temp -> left){
+                q.push(temp->left);
+            }
+            if(temp -> right){
+                q.push(temp->right);
+            }
+        }
     }
 }
 
@@ -108,27 +130,10 @@ void postOrderTraversal(node *root){
 
 int main()
 {
-    node *root = new node(1);
-    node *left = new node(2);
-    node *right = new node(3);
-    root->left = left;
-    root->right= right;
-    left->left = new node(5);
-    right->right = new node(6);
-
-    // root = buildTree(root);
-    // cout << root->data << endl;
-    // cout << root->left->data << endl;
-    // cout << root->right->data << endl;
-
-    printLevelOrder(root);
-
-    // cout << "pre order traveral" << endl;
-    // preOrderTraversal(root);
-    // cout << "\nIn order traversal" << endl;
-    // inOrderTraversal(root);
-    // cout << "\n post order traversal" << endl;
-    // postOrderTraversal(root);
-
-    
+    node *root = new node(10);
+    root->left = new node(50);
+    root->right = new node(60);
+    root->left->left = new node(76);
+    root->right->left = new node(90);
+    levelOrderTraversal(root);
 }
